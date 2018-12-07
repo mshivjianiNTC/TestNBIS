@@ -7,5 +7,7 @@
     </artifact>
     <artifact name="MiradorAPI" groupId="com.example.TestNBIS.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/MiradorAPI.xml</file>
+    <artifact name="eAppAPI" groupId="com.example.TestNBIS.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/eAppAPI.xml</file>
     </artifact>
 </artifacts>
