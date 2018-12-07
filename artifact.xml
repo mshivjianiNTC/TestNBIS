@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="eQipDirect" groupId="com.example.TestNBIS.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/eQipDirect.xml</file>
+    </artifact>
+    <artifact name="foreachtest" groupId="com.example.TestNBIS.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/foreachtest.xml</file>
+    </artifact>
+</artifacts>

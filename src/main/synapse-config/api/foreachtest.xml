@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/esb/foreach" name="foreachtest" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST">
+        <inSequence>
+            <property name="messageType" scope="axis2" type="STRING" value="multipart/form-data"/>
+            <property expression="$body" name="messagebody" scope="default" type="STRING"/>
+            <log>
+                <property expression="$body//CERT-EdNorton_20181010T193943447.pdf" name="file1"/>
+            </log>
+            <property expression="$body//PostData" name="postdata" scope="default" type="STRING"/>
+            <payloadFactory media-type="json">
+                <format>{"request":$1}</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('postdata')"/>
+                </args>
+            </payloadFactory>
+            <property description="Get arg5" expression="json-eval($.request.arg5)" name="arg5val" scope="default" type="STRING"/>
+            <property expression="$body//request//arg5" name="args5array" scope="default" type="STRING"/>
+            <payloadFactory media-type="json">
+                <format>{"arg5":$1}</format>
+                <args>
+                    <arg evaluator="json" expression="$.request.arg5"/>
+                </args>
+            </payloadFactory>
+            <log>
+                <property expression="json-eval($.arg5[0].attachmentFileName)" name="filename"/>
+            </log>
+            <foreach expression="//jsonObject">
+                <sequence>
+                    <payloadFactory media-type="json">
+                        <format>{attachmentFileName:[$1]}</format>
+                        <args>
+                            <arg evaluator="xml" expression="//arg5//attachmentFileName"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

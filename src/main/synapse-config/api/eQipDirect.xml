@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/esb/eqipdirect" name="eQipDirect" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/releaseapplication">
+        <inSequence>
+            <log level="full"/>
+            <enrich>
+                <source clone="false" type="body"/>
+                <target property="ORIGINAL_PAYLOAD" type="property"/>
+            </enrich>
+            <property name="messageType" scope="axis2" type="STRING" value="multipart/form-data"/>
+            <property expression="$body" name="messagebody" scope="default" type="STRING"/>
+            <property expression="$body//PostData" name="postdata" scope="default" type="STRING"/>
+            <payloadFactory media-type="json">
+                <format>{"request":$1}</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('postdata')"/>
+                </args>
+            </payloadFactory>
+            <property description="Get arg0" expression="json-eval($.request.arg0)" name="arg0val" scope="default" type="STRING"/>
+            <property description="Get arg1" expression="json-eval($.request.arg1)" name="arg1val" scope="default" type="STRING"/>
+            <property description="Get arg2" expression="json-eval($.request.arg2)" name="arg2val" scope="default" type="STRING"/>
+            <property description="Get arg3" expression="json-eval($.request.arg3)" name="arg3val" scope="default" type="STRING"/>
+            <property description="Get arg5" expression="json-eval($.request.arg5)" name="arg5val" scope="default" type="STRING"/>
+            <property expression="$body//SF_AUB.xml" name="arg4" scope="default" type="STRING"/>
+            <payloadFactory media-type="json">
+                <format>{"arg0":$1, "arg1":$2,"arg2":$3, "arg3":$4,"arg5":$5}</format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:arg0val"/>
+                    <arg evaluator="xml" expression="$ctx:arg1val"/>
+                    <arg evaluator="xml" expression="$ctx:arg2val"/>
+                    <arg evaluator="xml" expression="$ctx:arg3val"/>
+                    <arg evaluator="xml" expression="$ctx:arg5val"/>
+                </args>
+            </payloadFactory>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Get Agency ID" expression="$body//arg0.agency.agencyId" name="agencyid" scope="default" type="STRING"/>
+            <property description="Get Agency User SSN" expression="json-eval($.arg0.agencyUser.ssn)" name="agencyuserssn" scope="default" type="STRING"/>
+            <property description="Get Agency User PseudoSSN" expression="json-eval($.arg0.agencyUser.pseudoSsn)" name="pseudossn" scope="default" type="BOOLEAN"/>
+            <property description="Get Birth Day" expression="json-eval($.arg1.demographicData.birth.date.day)" name="birthday" scope="default" type="STRING"/>
+            <property description="Get Birth Month" expression="json-eval($.arg1.demographicData.birth.date.month)" name="birthmonth" scope="default" type="STRING"/>
+            <property description="Get Birth Year" expression="json-eval($.arg1.demographicData.birth.date.year)" name="birthyear" scope="default" type="STRING"/>
+            <property description="Get City" expression="json-eval($.arg1.demographicData.birth.place.city)" name="city" scope="default" type="STRING"/>
+            <property description="Get Country" expression="json-eval($.arg1.demographicData.birth.place.country)" name="country" scope="default" type="STRING"/>
+            <property description="Get County" expression="json-eval($.arg1.demographicData.birth.place.county)" name="county" scope="default" type="STRING"/>
+            <property description="Get State" expression="json-eval($.arg1.demographicData.birth.place.state)" name="state" scope="default" type="STRING"/>
+            <property description="Get Email" expression="json-eval($.arg1.demographicData.email)" name="email" scope="default" type="STRING"/>
+            <property description="Get Firstname" expression="json-eval($.arg1.demographicData.fullName.first)" name="firstname" scope="default" type="STRING"/>
+            <property description="Get Isinitalonlyfirstname" expression="json-eval($.arg1.demographicData.fullName.initialOnlyFirstName)" name="isinitialonlyfirstname" scope="default" type="BOOLEAN"/>
+            <property description="Get Isinitalonlymiddlename" expression="json-eval($.arg1.demographicData.fullName.initialOnlyMiddleName)" name="isinitialonlymiddlename" scope="default" type="BOOLEAN"/>
+            <property description="Get Lastname" expression="json-eval($.arg1.demographicData.fullName.last)" name="lastname" scope="default" type="STRING"/>
+            <property description="Get Middlename" expression="json-eval($.arg1.demographicData.fullName.middle)" name="middlename" scope="default" type="STRING"/>
+            <property description="Get nofirstname" expression="json-eval($.arg1.demographicData.fullName.noFirstName)" name="nofirstname" scope="default" type="BOOLEAN"/>
+            <property description="Get nomiddlename" expression="json-eval($.arg1.demographicData.fullName.noMiddleName)" name="nomiddlename" scope="default" type="BOOLEAN"/>
+            <property description="Get suffix" expression="json-eval($.arg1.demographicData.fullName.suffix)" name="suffix" scope="default" type="STRING"/>
+            <property description="Get Telephone" expression="json-eval($.arg1.demographicData.telephone)" name="telephone" scope="default" type="STRING"/>
+            <property description="Get Key PseudoSSN" expression="json-eval($.arg1.key.pseudoSsn)" name="keypseudossn" scope="default" type="BOOLEAN"/>
+            <property description="Get Key SSN" expression="json-eval($.arg1.key.ssn)" name="keyssn" scope="default" type="STRING"/>
+            <property description="Get Arg2 Agency ID" expression="json-eval($.arg2.agencyId)" name="arg2agencyid" scope="default" type="STRING"/>
+            <property description="Get Arg3 Group ID" expression="json-eval($.arg3.groupId)" name="arg3groupid" scope="default" type="STRING"/>
+            <property description="Get Arg5 First Attachment Description" expression="json-eval($.arg5[0].attachmentDescription)" name="arg5firstattachmentdescription" scope="default" type="STRING"/>
+            <property description="Get Arg5 First Attachment File Name" expression="json-eval($.arg5[0].attachmentFileName)" name="arg5firstattachmentfilename" scope="default" type="STRING"/>
+            <property description="Get Arg5 First Attachment Key ID" expression="json-eval($.arg5[0].attachmentKey.attachmentId)" name="arg5firstattachmentkeyattachmentid" scope="default" type="STRING"/>
+            <property description="Get Arg5 First Attachment Document Type" expression="json-eval($.arg5[0].documentType)" name="arg5firstattachmentdocumenttype" scope="default" type="STRING"/>
+            <property description="Get Arg5 First Attachment Method Of Transmission" expression="json-eval($.arg5[0].methodOfTransmission)" name="arg5firstattachmentmethodoftransmission" scope="default" type="STRING"/>
+            <property description="Get Arg5 Second Attachment Description" expression="json-eval($.arg5[1].attachmentDescription)" name="arg5secondattachmentdescription" scope="default" type="STRING"/>
+            <property description="Get Arg5 Second Attachment File Name" expression="json-eval($.arg5[1].attachmentFileName)" name="arg5secondattachmentfilename" scope="default" type="STRING"/>
+            <property description="Get Arg5 Second Attachment Key ID" expression="json-eval($.arg5[1].attachmentKey.attachmentId)" name="arg5secondattachmentkeyattachmentid" scope="default" type="STRING"/>
+            <property description="Get Arg5 Second Attachment Document Type" expression="json-eval($.arg5[1].documentType)" name="arg5secondattachmentdocumenttype" scope="default" type="STRING"/>
+            <property description="Get Arg5 Second Attachment Method Of Transmission" expression="json-eval($.arg5[1].methodOfTransmission)" name="arg5secondattachmentmethodoftransmission" scope="default" type="STRING"/>
+            <enrich>
+                <source clone="false" property="ORIGINAL_PAYLOAD" type="property"/>
+                <target type="body"/>
+            </enrich>
+            <property expression="fn:concat('//',get-property('arg5firstattachmentfilename'))" name="firstfile" scope="default" type="STRING"/>
+            <property expression="evaluate($ctx:firstfile)" name="firstfilecontents" scope="default" type="STRING"/>
+            <property expression="fn:concat('//',get-property('arg5secondattachmentfilename'))" name="secondfile" scope="default" type="STRING"/>
+            <property expression="evaluate($ctx:secondfile)" name="secondfilecontents" scope="default" type="STRING"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webservice.ws.eqip.opm.gov/">
+                        <soapenv:Header/>
+                        <soapenv:Body>
+                            <web:importRequest>
+                                <!--Optional: -->
+                                <arg0>
+                                    <!--Optional: -->
+                                    <agency>
+                                        <agencyId>$1</agencyId>
+                                    </agency>
+                                    <!--Optional: -->
+                                    <agencyUser>
+                                        <pseudoSsn>$2</pseudoSsn>
+                                        <!--Optional: -->
+                                        <ssn>$3</ssn>
+                                    </agencyUser>
+                                    <!--Optional: -->
+                                    <callerIpAddress/>
+                                </arg0>
+                                <!--Optional: -->
+                                <arg1>
+                                    <!--Optional: -->
+                                    <demographicData>
+                                        <!--Optional: -->
+                                        <birth>
+                                            <!--Optional: -->
+                                            <date>
+                                                <!--Optional: -->
+                                                <day>$4</day>
+                                                <!--Optional: -->
+                                                <month>$5</month>
+                                                <!--Optional: -->
+                                                <year>$6</year>
+                                            </date>
+                                            <!--Optional: -->
+                                            <place>
+                                                <!--Optional: -->
+                                                <city>$7</city>
+                                                <!--Optional: -->
+                                                <country>$8</country>
+                                                <!--Optional: -->
+                                                <county>$9</county>
+                                                <!--Optional: -->
+                                                <state>$10</state>
+                                            </place>
+                                        </birth>
+                                        <!--Optional: -->
+                                        <email>$11</email>
+                                        <!--Optional: -->
+                                        <fullName>
+                                            <!--Optional: -->
+                                            <first>$12</first>
+                                            <initialOnlyFirstName>$13</initialOnlyFirstName>
+                                            <initialOnlyMiddleName>$14</initialOnlyMiddleName>
+                                            <!--Optional: -->
+                                            <last>$15</last>
+                                            <!--Optional: -->
+                                            <middle>$16</middle>
+                                            <noFirstName>$17</noFirstName>
+                                            <noMiddleName>$18</noMiddleName>
+                                            <!--Optional: -->
+                                            <suffix>$19</suffix>
+                                        </fullName>
+                                        <!--Optional: -->
+                                        <telephone>$20</telephone>
+                                    </demographicData>
+                                    <!--Optional: -->
+                                    <key>
+                                        <pseudoSsn>$21</pseudoSsn>
+                                        <!--Optional: -->
+                                        <ssn>$22</ssn>
+                                    </key>
+                                </arg1>
+                                <!--Optional: -->
+                                <arg2>
+                                    <agencyId>$23</agencyId>
+                                </arg2>
+                                <!--Optional: -->
+                                <arg3>
+                                    <groupId>$24</groupId>
+                                </arg3>
+                                <!--Optional: -->
+                                <arg4>$36</arg4>
+                                <!--Zero or more repetitions: -->
+                                <arg5>
+                                    <!--Optional: -->
+                                    <attachmentBytes>$35</attachmentBytes>
+                                    <!--Optional: -->
+                                    <attachmentDescription>$25</attachmentDescription>
+                                    <!--Optional: -->
+                                    <attachmentFileName>$26</attachmentFileName>
+                                    <!--Optional: -->
+                                    <attachmentKey>
+                                        <attachmentId>$27</attachmentId>
+                                    </attachmentKey>
+                                    <!--Optional: -->
+                                    <documentType>$28</documentType>
+                                    <!--Optional: -->
+                                    <methodOfTransmission>$29</methodOfTransmission>
+                                </arg5>
+                            </web:importRequest>
+                        </soapenv:Body>
+                    </soapenv:Envelope>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:agencyid"/>
+                    <arg evaluator="xml" expression="$ctx:pseudossn"/>
+                    <arg evaluator="xml" expression="$ctx:ssn"/>
+                    <arg evaluator="xml" expression="$ctx:birthday"/>
+                    <arg evaluator="xml" expression="$ctx:birthmoth"/>
+                    <arg evaluator="xml" expression="$ctx:birthyear"/>
+                    <arg evaluator="xml" expression="$ctx:city"/>
+                    <arg evaluator="xml" expression="$ctx:country"/>
+                    <arg evaluator="xml" expression="$ctx:county"/>
+                    <arg evaluator="xml" expression="$ctx:state"/>
+                    <arg evaluator="xml" expression="$ctx:email"/>
+                    <arg evaluator="xml" expression="$ctx:firstname"/>
+                    <arg evaluator="xml" expression="$ctx:isinitialonlyfirstname"/>
+                    <arg evaluator="xml" expression="$ctx:isinitialonlymiddlename"/>
+                    <arg evaluator="xml" expression="$ctx:lastname"/>
+                    <arg evaluator="xml" expression="$ctx:middlename"/>
+                    <arg evaluator="xml" expression="$ctx:nofirstname"/>
+                    <arg evaluator="xml" expression="$ctx:nomiddlename"/>
+                    <arg evaluator="xml" expression="$ctx:suffix"/>
+                    <arg evaluator="xml" expression="$ctx:telephone"/>
+                    <arg evaluator="xml" expression="$ctx:keypseudossn"/>
+                    <arg evaluator="xml" expression="$ctx:keyssn"/>
+                    <arg evaluator="xml" expression="$ctx:arg2agencyid"/>
+                    <arg evaluator="xml" expression="$ctx:arg3groupid"/>
+                    <arg evaluator="xml" expression="$ctx:arg5firstattachmentdescription"/>
+                    <arg evaluator="xml" expression="$ctx:arg5firstattachmentfilename"/>
+                    <arg evaluator="xml" expression="$ctx:arg5firstattachmentkeyattachmentid"/>
+                    <arg evaluator="xml" expression="$ctx:arg5firstattachmentdocumenttype"/>
+                    <arg evaluator="xml" expression="$ctx:arg5firstattachmentmethodoftransmission"/>
+                    <arg evaluator="xml" expression="$ctx:arg5secondattachmentdescription"/>
+                    <arg evaluator="xml" expression="$ctx:arg5secondattachmentfilename"/>
+                    <arg evaluator="xml" expression="$ctx:arg5secondattachmentkeyattachmentid"/>
+                    <arg evaluator="xml" expression="$ctx:arg5secondattachmentdocumenttype"/>
+                    <arg evaluator="xml" expression="$ctx:arg5secondattachmentmethodoftransmission"/>
+                    <arg evaluator="xml" expression="get-property('firstfilecontents')"/>
+                    <arg evaluator="xml" expression="get-property('secondfilecontents')"/>
+                    <arg evaluator="xml" expression="get-property('arg4')"/>
+                </args>
+            </payloadFactory>
+            <property expression="$body//initiatingAgency/agencyId" name="agencyid" scope="default" type="STRING"/>
+            <property expression="$body//registrationCode" name="registrationcode" scope="default" type="STRING"/>
+            <property expression="$body//requestKey/requestId" name="requestid" scope="default" type="STRING"/>
+            <property expression="$body//userAlreadyExisted" name="useralreadyexisted" scope="default" type="BOOLEAN"/>
+            <payloadFactory media-type="json">
+                <format>{"initiatingAgency": {"agencyId":"$1"},"registrationCode": "$2","requestKey": {"requestId": "$3"},"userAlreadyExisted":"$4"} </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:agencyid"/>
+                    <arg evaluator="xml" expression="$ctx:registrationcode"/>
+                    <arg evaluator="xml" expression="$ctx:requestid"/>
+                    <arg evaluator="xml" expression="$ctx:useralreadyexisted"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
