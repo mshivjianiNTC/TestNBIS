@@ -102,7 +102,7 @@
         <configuration>
           <carbonServers>
             <CarbonServer>
-              <trustStorePath>C:\Users\manisha.shivjiani\Documents\wso2ei-6.2.0\repository\resources\security</trustStorePath>
+              <trustStorePath>C:\Users\manisha.shivjiani\Documents\wso2ei-6.2.0\repository\resources\security\wso2carbon.jks</trustStorePath>
               <trustStorePassword>wso2carbon</trustStorePassword>
               <trustStoreType>JKS</trustStoreType>
               <serverUrl>https://localhost:9443</serverUrl>
