@@ -92,17 +92,17 @@
         <artifactId>maven-car-deploy-plugin</artifactId>
         <version>1.1.1</version>
         <extensions>true</extensions>
-                 <dependencies>
-        <dependency>
+        <dependencies>
+          <dependency>
             <groupId>com.sun.activation</groupId>
             <artifactId>javax.activation</artifactId>
             <version>1.2.0</version>
-        </dependency>
-    </dependencies>
+          </dependency>
+        </dependencies>
         <configuration>
           <carbonServers>
             <CarbonServer>
-              <trustStorePath>${basedir}/src/main/resources/security/wso2carbon.jks</trustStorePath>
+              <trustStorePath>C:\Users\manisha.shivjiani\Documents\wso2ei-6.2.0\repository\resources\security</trustStorePath>
               <trustStorePassword>wso2carbon</trustStorePassword>
               <trustStoreType>JKS</trustStoreType>
               <serverUrl>https://localhost:9443</serverUrl>
